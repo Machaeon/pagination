@@ -1,0 +1,51 @@
+<script>
+    let currentPage = 0;
+    const pagesCount = 15;
+
+    document.addEventListener('contextmenu', function(ev) {
+        ev.preventDefault();
+        if (currentPage > 1) {
+            currentPage--;
+        }
+        generatePageButtons(currentPage, pagesCount)
+        return false;
+    }, false);
+
+
+    document.addEventListener('click', function(ev) {
+        ev.preventDefault();
+        if (currentPage < pagesCount) {
+            currentPage++;
+        }
+        generatePageButtons(currentPage, pagesCount)
+        return false;
+    }, false);
+
+
+    function generatePageButtons(
+        currentPage,
+        pagesCount,
+        startCount = 3,
+        middleCount = 2,
+        endCount = 3,
+        strSplit = '...'
+    ) {
+
+        let pageBtns = [
+            ...Array.from(new Array(startCount), (x, i) => i + 1),
+            ...Array.from(new Array(1 + middleCount * 2), (x, i) => i + currentPage - middleCount),
+            ...Array.from(new Array(endCount), (x, i) => i + pagesCount - endCount + 1),
+        ].reduce( (acc, val) => {
+            if (val < 1 || val > pagesCount || acc.indexOf(val) !== -1) return acc;
+            if (val - acc[acc.length - 1] > 1) {
+                //acc.push(strSplit);
+                acc.push((val - acc[acc.length - 1] == 2) ? val - 1 : strSplit);
+            }
+            acc.push(val);
+            return acc;
+        }, []);
+
+        console.log(pageBtns);
+    }
+
+</script>
