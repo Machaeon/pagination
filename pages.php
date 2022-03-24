@@ -16,9 +16,7 @@ function generatePages(
         range($pagesCount - $endCount + 1, $pagesCount)),
         function($carry, $item) use ($pagesCount, $strSplit, $removeSinglePageSplitter) {
                 if (is_numeric(end($carry)) && $item - end($carry) > 1) {
-                    $carry[] = $removeSinglePageSplitter
-                        ? ($item - end($carry) > 2) ? $strSplit : $item - 1
-                        : $strSplit;
+                    $carry[] = ($removeSinglePageSplitter && $item - end($carry) == 2) ? $item - 1 : $strSplit;
                 }
                 $carry[] = $item;
 
