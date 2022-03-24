@@ -11,10 +11,9 @@ function generatePages(
 ){
     return array_reduce(array_merge(
         range(1, $startCount),
-        range($currentPage - $middleCount, $currentPage + $middleCount),
+        range(max($currentPage - $middleCount, $startCount + 1), min($currentPage + $middleCount, $pagesCount - $endCount)),
         range($pagesCount - $endCount + 1, $pagesCount)),
         function($carry, $item) use ($pagesCount, $strSplit) {
-                if ($item < 1 || $item > $pagesCount || array_search($item, $carry) !== false) return $carry;
                 if (is_numeric(end($carry)) && $item - end($carry) > 1) {
                     //$carry[] = $strSplit;
                     $carry[] = ($item - end($carry) > 2) ? $strSplit : $item - 1;
